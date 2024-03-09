@@ -30,7 +30,7 @@
     </form>
     <button class="google-login">
       <img src="../assets/google.png" alt="" /> <span>Sign in with Google</span>
-      <GoogleLogin class="googlebtn" :callback="callback" />
+      <GoogleLogin class="googlebtn" :callback="callback" prompt />
     </button>
   </div>
 </template>
