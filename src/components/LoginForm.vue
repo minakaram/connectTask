@@ -30,7 +30,7 @@
     </form>
     <button class="google-login">
       <img src="../assets/google.png" alt="" /> <span>Sign in with Google</span>
-      <GoogleLogin class="googlebtn" :callback="callback" prompt/>
+      <GoogleLogin class="googlebtn" :callback="callback" />
     </button>
   </div>
 </template>
@@ -106,7 +106,6 @@ export default {
         !this.passwordError
       ) {
         this.$router.replace("/Home");
- 
       }
     },
   },
@@ -264,12 +263,26 @@ export default {
       transform: translateX(-50%);
       top: 5px;
       opacity: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      @media (max-width: 1025px) {
+        left: 50%;
+      }
+      @media (max-width: 768px) {
+        left: 60%;
+      }
+      .S9gUrf-YoZ4jf {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
     }
     &:hover {
       background-color: rgb(228, 226, 226);
     }
-    @media(max-width:768px){
-      margin:1rem auto
+    @media (max-width: 1025px) {
+      margin: 1rem auto;
     }
   }
 }
