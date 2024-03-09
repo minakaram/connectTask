@@ -236,6 +236,7 @@ export default {
     .error-message {
       color: red;
       font-size: 12px;
+      width: 80%;
     }
   }
   .google-login {
