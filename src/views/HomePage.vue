@@ -2,10 +2,18 @@
   <div class="Home">
     <NavBar />
     <div class="home-main">
-      <h1>Recommended Cateogries</h1>
+      <div class="search-container">
+        <h1>Recommended Categories</h1>
+        <input
+          type="text"
+          class="search-input"
+          v-model="searchQuery"
+          placeholder="Search for product"
+        />
+      </div>
       <div class="categories-container">
         <div
-          v-for="item in apiData"
+          v-for="item in filteredData"
           :key="item.id"
           class="category-item"
           data-aos="fade-up"
@@ -24,13 +32,13 @@
           </div>
         </div>
       </div>
-      <!-- <p v-for="item in apiData" :key="item.id">{{ item.title }}</p> -->
     </div>
     <div class="up-arrow" :class="{ active: showUpArrow }" @click="scrollToTop">
       <img src="../assets/up-arrow (1).png" alt="" />
     </div>
   </div>
 </template>
+
 <script>
 import axios from "axios";
 import NavBar from "@/components/NavBar.vue";
@@ -41,12 +49,19 @@ export default {
   data() {
     return {
       apiData: [],
-      showUpArrow: false, // Add a variable to control arrow visibility
+      showUpArrow: false,
+      searchQuery: "",
     };
   },
   beforeDestroy() {
-    // Remove the scroll event listener when the component is destroyed
     window.removeEventListener("scroll", this.handleScroll);
+  },
+  computed: {
+    filteredData() {
+      return this.apiData.filter((item) =>
+        String(item.title.toLowerCase()).includes(this.searchQuery)
+      );
+    },
   },
   mounted() {
     this.fetchData();
@@ -58,15 +73,13 @@ export default {
         const response = await axios.get("https://dummyjson.com/products");
         this.apiData = response.data.products;
       } catch (error) {
-        // Axios interceptor will handle the error globally
+        console.error("Error fetching data:", error);
       }
     },
     handleScroll() {
-      // Update showUpArrow based on the scroll position
       this.showUpArrow = window.scrollY > 150;
     },
     scrollToTop() {
-      // Smooth scroll to the top
       window.scrollTo({
         top: 0,
         behavior: "smooth",
@@ -75,6 +88,7 @@ export default {
   },
 };
 </script>
+
 <style scoped lang="scss">
 .Home {
   width: 100%;
@@ -82,13 +96,33 @@ export default {
   .home-main {
     width: 90%;
     margin: 3rem auto;
-    h1 {
-      color: #080713;
-      @media(max-width:600px){
-        font-size: 25px;
+    .search-container {
+      display: flex;
+      justify-content: space-between;
+      h1 {
+        color: #080713;
+        @media (max-width: 600px) {
+          font-size: 25px;
+        }
+        @media (max-width: 400px) {
+          font-size: 20px;
+        }
       }
-      @media(max-width:400px){
-        font-size: 20px;
+      input {
+        border: none;
+        border-radius: 6px;
+        width: 300px;
+        padding: 0rem 0.5rem;
+        outline: none;
+        box-shadow: 0px 2px 8px 1px rgba(2, 13, 25, 0.06);
+        height: 50px;
+        @media (max-width: 768px) {
+          width: 100%;
+        }
+      }
+      @media (max-width: 768px) {
+        flex-direction: column;
+        gap:1rem
       }
     }
     .categories-container {
