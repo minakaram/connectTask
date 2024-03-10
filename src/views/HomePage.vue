@@ -122,7 +122,7 @@ export default {
       }
       @media (max-width: 768px) {
         flex-direction: column;
-        gap:1rem
+        gap: 1rem;
       }
     }
     .categories-container {
