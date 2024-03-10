@@ -58,8 +58,12 @@ export default {
   },
   computed: {
     filteredData() {
+      const searchRegex = new RegExp(
+        [...this.searchQuery.toLowerCase()].join(".*")
+      );
+
       return this.apiData.filter((item) =>
-        String(item.title.toLowerCase()).includes(this.searchQuery)
+        searchRegex.test(item.title.toLowerCase())
       );
     },
   },
@@ -96,6 +100,7 @@ export default {
   .home-main {
     width: 90%;
     margin: 3rem auto;
+    min-height: 90vh;
     .search-container {
       display: flex;
       justify-content: space-between;
